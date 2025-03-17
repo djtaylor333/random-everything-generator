@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page 
+    xmlns="http://schemas.nativescript.org/tns.xsd" 
+    navigatingTo="navigatingTo"
+    class="page">
+    
+    <ActionBar title="Random Generator" class="bg-purple-600 text-white" />
+    
+    <ScrollView>
+        <StackLayout class="p-4 space-y-6">
+            <!-- Number Generator Section -->
+            <StackLayout class="border rounded-lg p-4 bg-white">
+                <Label text="Number Generator" class="text-lg font-bold mb-2" />
+                <GridLayout columns="*, *" rows="auto, auto" class="mb-2">
+                    <TextField text="{{ numberOptions.min }}" hint="Min" keyboardType="number" col="0" row="0" class="m-1" />
+                    <TextField text="{{ numberOptions.max }}" hint="Max" keyboardType="number" col="1" row="0" class="m-1" />
+                    <Switch checked="{{ numberOptions.isFloat }}" col="0" row="1" />
+                    <Label text="Include decimals" col="1" row="1" />
+                </GridLayout>
+                <Button text="Generate Number" tap="{{ generateNumber }}" class="bg-blue-500 text-white p-4 mb-2" />
+                <Label text="{{ numberResult }}" class="text-center text-lg font-bold" textWrap="true" />
+            </StackLayout>
+
+            <!-- Name Generator Section -->
+            <StackLayout class="border rounded-lg p-4 bg-white">
+                <Label text="Name Generator" class="text-lg font-bold mb-2" />
+                <ListPicker items="{{ nameTypes }}" selectedIndex="{{ nameTypeIndex }}" class="mb-2" />
+                <Button text="Generate Name" tap="{{ generateName }}" class="bg-green-500 text-white p-4 mb-2" />
+                <Label text="{{ nameResult }}" class="text-center text-lg font-bold" textWrap="true" />
+            </StackLayout>
+
+            <!-- Word Generator Section -->
+            <StackLayout class="border rounded-lg p-4 bg-white">
+                <Label text="Word Generator" class="text-lg font-bold mb-2" />
+                <GridLayout columns="*, *" rows="auto" class="mb-2">
+                    <TextField text="{{ wordOptions.length1 }}" hint="Min Length" keyboardType="number" col="0" class="m-1" />
+                    <TextField text="{{ wordOptions.length2 }}" hint="Max Length" keyboardType="number" col="1" class="m-1" />
+                </GridLayout>
+                <Button text="Generate Word" tap="{{ generateWord }}" class="bg-yellow-500 text-white p-4 mb-2" />
+                <Label text="{{ wordResult }}" class="text-center text-lg font-bold" textWrap="true" />
+            </StackLayout>
+
+            <!-- Coin Flip Section -->
+            <StackLayout class="border rounded-lg p-4 bg-white">
+                <Label text="Coin Flip" class="text-lg font-bold mb-2" />
+                <GridLayout columns="auto, *" rows="auto" class="mb-2">
+                    <!-- Previous Coin Result -->
+                    <StackLayout col="0" class="mr-4" visibility="{{ previousCoinResult ? 'visible' : 'collapsed' }}">
+                        <Label text="Previous:" class="text-sm text-gray-600 mb-1" />
+                        <Image src="{{ previousCoinImage }}" class="w-12 h-12" stretch="aspectFit" />
+                        <Label text="{{ previousCoinResult }}" class="text-sm text-center" />
+                    </StackLayout>
+                    <!-- Current Coin Result -->
+                    <StackLayout col="1">
+                        <Image src="{{ coinImage }}" class="w-24 h-24 mx-auto" visibility="{{ isCoinSpinning ? 'visible' : 'collapsed' }}" stretch="aspectFit" />
+                        <StackLayout visibility="{{ !isCoinSpinning ? 'visible' : 'collapsed' }}">
+                            <Image src="{{ coinResultImage }}" class="w-24 h-24 mx-auto" stretch="aspectFit" />
+                            <Label text="{{ coinResult }}" class="text-center text-lg font-bold" />
+                        </StackLayout>
+                    </StackLayout>
+                </GridLayout>
+                <Button text="Flip Coin" tap="{{ flipCoin }}" class="bg-indigo-500 text-white p-4" isEnabled="{{ !isCoinSpinning }}" />
+            </StackLayout>
+
+            <!-- Color Generator Section -->
+            <StackLayout class="border rounded-lg p-4 bg-white">
+                <Label text="Color Generator" class="text-lg font-bold mb-2" />
+                <ContentView backgroundColor="{{ currentColor.hex }}" class="h-24 rounded-lg mb-2" />
+                <Button text="Generate Color" tap="{{ generateColor }}" class="bg-orange-500 text-white p-4 mb-2" />
+                <StackLayout class="space-y-1">
+                    <Label text="{{ colorResult }}" class="text-center text-lg font-bold" textWrap="true" />
+                    <Label text="{{ colorDetails }}" class="text-center text-sm" textWrap="true" />
+                </StackLayout>
+            </StackLayout>
+
+            <!-- Dice Generator Section -->
+            <StackLayout class="border rounded-lg p-4 bg-white">
+                <Label text="Dice Generator" class="text-lg font-bold mb-2" />
+                <ListPicker items="{{ diceTypes }}" selectedIndex="{{ selectedDiceIndex }}" class="mb-2" />
+                <GridLayout class="mb-2">
+                    <!-- Rolling Animation -->
+                    <StackLayout visibility="{{ isDiceRolling ? 'visible' : 'collapsed' }}" class="text-center">
+                        <Image src="{{ diceImage }}" class="w-32 h-32 mx-auto" stretch="aspectFit" />
+                        <Label text="Rolling..." class="text-gray-600" />
+                    </StackLayout>
+                    <!-- Result Display -->
+                    <StackLayout visibility="{{ !isDiceRolling ? 'visible' : 'collapsed' }}" class="text-center">
+                        <Image src="{{ currentDiceImage }}" class="w-32 h-32 mx-auto" stretch="aspectFit" />
+                        <Label text="{{ diceResult }}" class="text-4xl font-bold" />
+                    </StackLayout>
+                </GridLayout>
+                <Button text="Roll Dice" tap="{{ rollDice }}" class="bg-red-500 text-white p-4 mb-2" isEnabled="{{ !isDiceRolling }}" />
+                <Label text="{{ diceResultText }}" class="text-center text-lg font-bold" textWrap="true" />
+            </StackLayout>
+
+            <!-- Place Generator Section -->
+            <StackLayout class="border rounded-lg p-4 bg-white">
+                <Label text="Place Generator" class="text-lg font-bold mb-2" />
+                <Button text="Generate Place" tap="{{ generatePlace }}" class="bg-purple-500 text-white p-4 mb-2" />
+                <Label text="{{ placeResult }}" class="text-center text-lg font-bold" textWrap="true" />
+                <Label text="{{ placeDetails }}" class="text-center text-sm" textWrap="true" />
+            </StackLayout>
+
+            <!-- Country Generator Section -->
+            <StackLayout class="border rounded-lg p-4 bg-white">
+                <Label text="Country Generator" class="text-lg font-bold mb-2" />
+                <Button text="Generate Country" tap="{{ generateCountry }}" class="bg-green-500 text-white p-4 mb-2" />
+                <Image src="{{ countryFlag }}" class="w-32 h-24 mx-auto mb-2" visibility="{{ countryFlag ? 'visible' : 'collapsed' }}" />
+                <Label text="{{ countryResult }}" class="text-center text-lg font-bold" textWrap="true" />
+                <Label text="{{ countryDetails }}" class="text-center text-sm" textWrap="true" />
+            </StackLayout>
+
+            <!-- Date Generator Section -->
+            <StackLayout class="border rounded-lg p-4 bg-white">
+                <Label text="Date Generator" class="text-lg font-bold mb-2" />
+                <GridLayout columns="*, *" rows="auto" class="mb-2">
+                    <Switch checked="{{ dateOptions.includePast }}" col="0" />
+                    <Label text="Include Past" col="1" />
+                </GridLayout>
+                <GridLayout columns="*, *" rows="auto" class="mb-2">
+                    <Switch checked="{{ dateOptions.includeFuture }}" col="0" />
+                    <Label text="Include Future" col="1" />
+                </GridLayout>
+                <Button text="Generate Date" tap="{{ generateDate }}" class="bg-pink-500 text-white p-4 mb-2" />
+                <Label text="{{ dateResult }}" class="text-center text-lg font-bold" textWrap="true" />
+            </StackLayout>
+        </StackLayout>
+    </ScrollView>
+</Page>
